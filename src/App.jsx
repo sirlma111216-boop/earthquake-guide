@@ -2,22 +2,20 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Header from './components/Header.jsx'
 import Sidebar, { StepSelect } from './components/Sidebar.jsx'
 import StepView from './components/StepView.jsx'
-import InstructorView from './components/InstructorView.jsx'
 import Footer from './components/Footer.jsx'
 import { GuideContext } from './GuideContext.js'
 import { STEPS } from './data/steps.js'
 import { ALL_CHECK_IDS, STEP_CHECK_IDS, countDone } from './lib/checks.js'
 import { probeStorage, loadState, saveState, clearState } from './lib/storage.js'
 
-const VALID = new Set([...STEPS.map((s) => s.id), 'instructor'])
+const VALID = new Set(STEPS.map((s) => s.id))
 
-// 주소에서 현재 단계 읽기: #step-3, #instructor, 또는 ?step=3
+// 주소에서 현재 단계 읽기: #step-3 또는 ?step=3
 function readLocation() {
   const hash = decodeURIComponent(window.location.hash.slice(1))
   if (VALID.has(hash)) return hash
   const q = new URLSearchParams(window.location.search).get('step')
   if (q != null) {
-    if (q === 'instructor') return q
     if (VALID.has('step-' + q)) return 'step-' + q
   }
   return null
@@ -39,7 +37,7 @@ export default function App() {
 
   // 마지막으로 본 단계 기록
   useEffect(() => {
-    if (current !== 'instructor') setState((s) => (s.last === current ? s : { ...s, last: current }))
+    setState((s) => (s.last === current ? s : { ...s, last: current }))
   }, [current])
 
   // 공유받은 단계 주소로 처음 열면 그 단계 본문이 보이게 스크롤 (초점은 옮기지 않음)
@@ -73,7 +71,7 @@ export default function App() {
       focusNext.current = false
     }
     const step = STEPS.find((s) => s.id === current)
-    document.title = (step ? `${step.num}단계 ${step.title} · ` : current === 'instructor' ? '강사용 보기 · ' : '') + '지진 지도 만들기 연수'
+    document.title = (step ? `${step.num}단계 ${step.title} · ` : '') + '지진 지도 만들기 연수'
   }, [current])
 
   const go = useCallback((id) => {
@@ -98,15 +96,6 @@ export default function App() {
       if (checks[id]) delete checks[id]
       else checks[id] = true
       return { ...s, checks }
-    })
-  }, [])
-
-  const toggleInst = useCallback((id) => {
-    setState((s) => {
-      const inst = { ...s.inst }
-      if (inst[id]) delete inst[id]
-      else inst[id] = true
-      return { ...s, inst }
     })
   }, [])
 
@@ -137,8 +126,8 @@ export default function App() {
   }
 
   const ctx = useMemo(
-    () => ({ checks: state.checks, inst: state.inst, toggle, toggleInst, announce, deployUrl: state.deployUrl, setDeployUrl, storageOK }),
-    [state.checks, state.inst, state.deployUrl, toggle, toggleInst, announce, setDeployUrl, storageOK],
+    () => ({ checks: state.checks, toggle, announce, deployUrl: state.deployUrl, setDeployUrl, storageOK }),
+    [state.checks, state.deployUrl, toggle, announce, setDeployUrl, storageOK],
   )
 
   return (
@@ -161,12 +150,11 @@ export default function App() {
         <main id="main" className="content" tabIndex={-1}>
           <StepSelect current={current} onGo={go} />
           <div className="print-only print-intro">
-            이 인쇄본에는 0~10단계 전체 안내, 모든 프롬프트, 막혔을 때 도움말, 강사용 보기가 포함되어 있습니다.
+            이 인쇄본에는 0~10단계 전체 안내, 모든 프롬프트, 막혔을 때 도움말이 포함되어 있습니다.
           </div>
           {STEPS.map((s) => (
             <StepView key={s.id} step={s} active={current === s.id} onGo={go} ref={headingRef} />
           ))}
-          <InstructorView active={current === 'instructor'} onBack={() => go(state.last || 'step-0')} ref={headingRef} />
           <Footer />
         </main>
       </div>

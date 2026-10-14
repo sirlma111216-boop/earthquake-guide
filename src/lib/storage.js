@@ -1,7 +1,7 @@
 // localStorage 래퍼. 저장이 막힌 브라우저(사생활 보호 모드 등)에서도 예외 없이 동작한다.
 const KEY = 'eq-guide-v1'
 
-const EMPTY = { checks: {}, inst: {}, last: null, deployUrl: '' }
+const EMPTY = { checks: {}, last: null, deployUrl: '' }
 
 export function probeStorage() {
   try {
@@ -21,7 +21,6 @@ export function loadState() {
     const parsed = JSON.parse(raw)
     return {
       checks: parsed.checks && typeof parsed.checks === 'object' ? parsed.checks : {},
-      inst: parsed.inst && typeof parsed.inst === 'object' ? parsed.inst : {},
       last: typeof parsed.last === 'string' ? parsed.last : null,
       deployUrl: typeof parsed.deployUrl === 'string' ? parsed.deployUrl : '',
     }

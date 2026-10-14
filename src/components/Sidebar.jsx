@@ -12,7 +12,6 @@ export function StepSelect({ current, onGo }) {
             {s.num}단계 · {s.title} (약 {s.minutes}분)
           </option>
         ))}
-        <option value="instructor">강사용 보기</option>
       </select>
     </div>
   )
@@ -52,20 +51,6 @@ export default function Sidebar({ current, onGo }) {
           )
         })}
       </ol>
-      <a
-        href="#instructor"
-        className={'toc-link toc-inst' + (current === 'instructor' ? ' is-current' : '')}
-        onClick={(e) => {
-          e.preventDefault()
-          onGo('instructor')
-        }}
-      >
-        <span className="toc-num" aria-hidden="true">★</span>
-        <span className="toc-text">
-          <span className="toc-title">강사용 보기</span>
-          <span className="toc-sub">사전 점검 · 시간 배분 · 시연 팁</span>
-        </span>
-      </a>
     </nav>
   )
 }
