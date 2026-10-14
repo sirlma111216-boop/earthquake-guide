@@ -1,18 +1,5 @@
 import { COURSE } from '../data/course.js'
 
-function Seismo() {
-  // 판 경계 선과 규모별 원을 모티프로 한 얇은 장식. 실습 시작 위치를 밀지 않도록 높이를 작게 둔다.
-  return (
-    <svg className="seismo" viewBox="0 0 600 36" preserveAspectRatio="none" aria-hidden="true">
-      <path d="M0 22 L80 22 L110 14 L150 26 L210 18 L260 24 L300 10 L340 28 L390 20 L450 22 L520 15 L600 21" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="0" opacity=".55" />
-      <circle cx="110" cy="14" r="3" className="dot-shallow" />
-      <circle cx="300" cy="10" r="6" className="dot-mid" />
-      <circle cx="340" cy="28" r="4" className="dot-shallow" />
-      <circle cx="520" cy="15" r="8" className="dot-deep" />
-    </svg>
-  )
-}
-
 export default function Header({ percent, done, total, storageOK, onStart, onResume, onPrint, onReset }) {
   return (
     <header className="top">
@@ -34,7 +21,6 @@ export default function Header({ percent, done, total, storageOK, onStart, onRes
         </ul>
         <p className="result-line">{COURSE.result}</p>
         <p className="core-msg">{COURSE.coreMessage}</p>
-        <Seismo />
         <div className="progress-row">
           <div className="progress" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={percent} aria-label="전체 진행률">
             <div className="progress-bar" style={{ width: percent + '%' }} />

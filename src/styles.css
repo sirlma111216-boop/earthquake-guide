@@ -93,12 +93,7 @@ code {
 .badges .badge-route { background: var(--ink); color: #fff; border-color: var(--ink); }
 .result-line { margin: 4px 0 0; font-weight: 700; }
 .core-msg { margin: 2px 0 0; color: var(--ink-2); }
-.seismo { display: block; width: 100%; height: 26px; color: var(--accent); margin: 6px 0 4px; }
-.seismo circle { stroke: #fff; stroke-width: 1; }
-.dot-shallow { fill: var(--shallow); }
-.dot-mid { fill: var(--mid); }
-.dot-deep { fill: var(--deep); }
-.progress-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.progress-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
 .progress { flex: 1 1 260px; height: 12px; background: #e3eaf0; border-radius: 999px; overflow: hidden; border: 1px solid var(--line); }
 .progress-bar { height: 100%; background: var(--accent); transition: width .2s; }
 .progress-text { font-size: .95rem; }
@@ -382,7 +377,6 @@ tr:last-child th, tr:last-child td { border-bottom: 0; }
   .step > section, .step > figure, .step-head { padding: 14px 14px; }
   .step-head h2 { font-size: 1.35rem; }
   .core-msg { font-size: .95rem; }
-  .seismo { height: 16px; margin: 4px 0 2px; }
   .storage-note { font-size: .8rem; }
   .badges li { font-size: .8rem; }
   .flow { grid-template-columns: 1fr; }
@@ -407,7 +401,7 @@ tr:last-child th, tr:last-child td { border-bottom: 0; }
   @page { margin: 14mm 12mm; }
   body { background: #fff; font-size: 11.5pt; line-height: 1.55; }
   .skip, .side, .step-select, .top-actions, .storage-note, .toast-region, .btn, .step-nav,
-  .progress-row, .seismo, .collapse-icon, .copy-status, .deploy-row button { display: none !important; }
+  .progress-row, .collapse-icon, .copy-status, .deploy-row button { display: none !important; }
   .print-only { display: block; }
   .print-intro { border: 1px solid #999; padding: 6px 10px; margin-bottom: 10px; font-size: 10pt; }
   .layout { display: block; padding: 0; max-width: none; }
