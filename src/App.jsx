@@ -5,8 +5,7 @@ import StepView from './components/StepView.jsx'
 import Footer from './components/Footer.jsx'
 import { GuideContext } from './GuideContext.js'
 import { STEPS } from './data/steps.js'
-import { ALL_CHECK_IDS, STEP_CHECK_IDS, countDone } from './lib/checks.js'
-import { probeStorage, loadState, saveState, clearState } from './lib/storage.js'
+import { probeStorage, loadState, saveState } from './lib/storage.js'
 
 const VALID = new Set(STEPS.map((s) => s.id))
 
@@ -30,15 +29,10 @@ export default function App() {
   const focusNext = useRef(false)
   const toastTimer = useRef(null)
 
-  // 저장
+  // 저장 (배포 주소 기록만)
   useEffect(() => {
     if (storageOK) saveState(state)
   }, [state, storageOK])
-
-  // 마지막으로 본 단계 기록
-  useEffect(() => {
-    setState((s) => (s.last === current ? s : { ...s, last: current }))
-  }, [current])
 
   // 공유받은 단계 주소로 처음 열면 그 단계 본문이 보이게 스크롤 (초점은 옮기지 않음)
   useEffect(() => {
@@ -90,15 +84,6 @@ export default function App() {
     toastTimer.current = setTimeout(() => setToast(null), 5000)
   }, [])
 
-  const toggle = useCallback((id) => {
-    setState((s) => {
-      const checks = { ...s.checks }
-      if (checks[id]) delete checks[id]
-      else checks[id] = true
-      return { ...s, checks }
-    })
-  }, [])
-
   const setDeployUrl = useCallback(
     (url) => {
       setState((s) => ({ ...s, deployUrl: url }))
@@ -107,42 +92,15 @@ export default function App() {
     [announce],
   )
 
-  const done = countDone(ALL_CHECK_IDS, state.checks)
-  const total = ALL_CHECK_IDS.length
-  const percent = total ? Math.round((done / total) * 100) : 0
-
-  const onResume = () => {
-    const firstOpen = STEPS.find((s) => countDone(STEP_CHECK_IDS[s.id], state.checks) < STEP_CHECK_IDS[s.id].length)
-    const target = firstOpen ? firstOpen.id : state.last || STEPS[STEPS.length - 1].id
-    go(target)
-    announce(firstOpen ? `${firstOpen.num}단계부터 이어서 합니다. 아직 체크하지 않은 항목이 있는 첫 단계입니다.` : '모든 항목을 체크했습니다. 마지막 단계를 엽니다.')
-  }
-
-  const onReset = () => {
-    const ok = window.confirm('이 브라우저에 저장된 모든 체크 기록과 기록한 배포 주소를 지웁니다. 되돌릴 수 없습니다. 초기화할까요?')
-    if (!ok) return
-    setState(clearState())
-    announce('진행 기록을 초기화했습니다.')
-  }
-
   const ctx = useMemo(
-    () => ({ checks: state.checks, toggle, announce, deployUrl: state.deployUrl, setDeployUrl, storageOK }),
-    [state.checks, state.deployUrl, toggle, announce, setDeployUrl, storageOK],
+    () => ({ announce, deployUrl: state.deployUrl, setDeployUrl, storageOK }),
+    [state.deployUrl, announce, setDeployUrl, storageOK],
   )
 
   return (
     <GuideContext.Provider value={ctx}>
       <a className="skip" href="#main">본문으로 건너뛰기</a>
-      <Header
-        percent={percent}
-        done={done}
-        total={total}
-        storageOK={storageOK}
-        onStart={() => go('step-0')}
-        onResume={onResume}
-        onPrint={() => window.print()}
-        onReset={onReset}
-      />
+      <Header onPrint={() => window.print()} />
       <div className="layout">
         <aside className="side">
           <Sidebar current={current} onGo={go} />

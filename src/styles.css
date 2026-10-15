@@ -93,11 +93,7 @@ code {
 .badges .badge-route { background: var(--ink); color: #fff; border-color: var(--ink); }
 .result-line { margin: 4px 0 0; font-weight: 700; }
 .core-msg { margin: 2px 0 0; color: var(--ink-2); }
-.progress-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
-.progress { flex: 1 1 260px; height: 12px; background: #e3eaf0; border-radius: 999px; overflow: hidden; border: 1px solid var(--line); }
-.progress-bar { height: 100%; background: var(--accent); transition: width .2s; }
-.progress-text { font-size: .95rem; }
-.top-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.top-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
 .storage-note { margin: 8px 0 0; font-size: .85rem; color: var(--muted); }
 
 /* ───────── 레이아웃 ───────── */
@@ -164,20 +160,16 @@ code {
 .tag-app { background: #fff0d9; color: var(--warn); }
 .tag-ok { background: var(--ok); color: #fff; }
 
-/* 체크 목록 */
+/* 번호 목록 */
 .check-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
 .check-item { display: flex; gap: 10px; align-items: flex-start; padding: 6px 8px; border-radius: 8px; }
-.check-item:hover { background: #f1f6f9; }
-.check-item input { width: 22px; height: 22px; margin: 4px 0 0; flex-shrink: 0; accent-color: var(--accent); cursor: pointer; }
-.check-item label { display: flex; gap: 8px; cursor: pointer; flex: 1; min-width: 0; }
 .check-num {
   flex-shrink: 0; min-width: 26px; height: 26px; border-radius: 6px; margin-top: 2px;
   display: grid; place-items: center; font-weight: 800; font-size: .85rem;
   background: var(--ink); color: #fff;
 }
 .check-text { min-width: 0; }
-.check-item.is-done .check-text { color: var(--muted); }
-.check-item.is-done .check-num { background: var(--ok); }
+.check-num.is-mark { background: var(--ok); }
 .actions-try { border-left: 5px solid #f0b46a !important; }
 
 /* 정보 블록 */
@@ -254,7 +246,7 @@ tr:last-child th, tr:last-child td { border-bottom: 0; }
 .trouble-dl dd { margin: 2px 0 0; }
 .trouble-dl ul, .trouble-dl ol { margin: 0; padding-left: 1.3em; }
 
-/* 성공·체크리스트 */
+/* 성공·완료 확인 */
 .success { border-left: 5px solid var(--ok) !important; }
 .success ul { margin: 0; padding-left: 1.3em; }
 .checklist > p { margin: 0 0 8px; font-size: .9rem; }
@@ -393,7 +385,6 @@ tr:last-child th, tr:last-child td { border-bottom: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .progress-bar { transition: none; }
 }
 
 /* ───────── 인쇄 ───────── */
@@ -401,7 +392,7 @@ tr:last-child th, tr:last-child td { border-bottom: 0; }
   @page { margin: 14mm 12mm; }
   body { background: #fff; font-size: 11.5pt; line-height: 1.55; }
   .skip, .side, .step-select, .top-actions, .storage-note, .toast-region, .btn, .step-nav,
-  .progress-row, .collapse-icon, .copy-status, .deploy-row button { display: none !important; }
+  .collapse-icon, .copy-status, .deploy-row button { display: none !important; }
   .print-only { display: block; }
   .print-intro { border: 1px solid #999; padding: 6px 10px; margin-bottom: 10px; font-size: 10pt; }
   .layout { display: block; padding: 0; max-width: none; }
@@ -424,7 +415,6 @@ tr:last-child th, tr:last-child td { border-bottom: 0; }
   a.ext::after { content: ' (' attr(href) ')'; font-size: 8.5pt; color: #333; word-break: break-all; }
   .chip-link::after { content: ' ' attr(href); font-size: 8.5pt; }
   h2, h3 { break-after: avoid; }
-  .check-item input { width: 14px; height: 14px; }
 }
 
 /* AI Studio 실제 화면 캡처 */

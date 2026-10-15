@@ -10,7 +10,7 @@ const fail = (m) => errors.push(m)
 if (STEPS.length !== 11) fail(`단계 수가 11이 아님: ${STEPS.length}`)
 STEPS.forEach((s, i) => {
   if (s.num !== i) fail(`${s.id}: 번호 순서 오류`)
-  for (const k of ['title', 'minutes', 'outcome', 'workplace']) if (!s[k]) fail(`${s.id}: ${k} 없음`)
+  for (const k of ['title', 'outcome', 'workplace']) if (!s[k]) fail(`${s.id}: ${k} 없음`)
   if (!s.blocks.some((b) => b.type === 'actions')) fail(`${s.id}: 따라 하기 없음`)
   if (!s.success?.length) fail(`${s.id}: 정상 결과 없음`)
   if (!s.checklist?.length) fail(`${s.id}: 완료 체크리스트 없음`)
@@ -41,9 +41,7 @@ for (const term of Object.keys(COURSE.GLOSSARY)) {
   if (n > 1) fail(`용어 설명이 ${n}번 붙음(첫 등장에만): ${term}`)
 }
 
-const minutes = STEPS.reduce((n, s) => n + s.minutes, 0)
-console.log(`단계 ${STEPS.length}개 · 권장 시간 합계 ${minutes}분 · 프롬프트 ${Object.keys(PROMPTS).length}개 · 복구 프롬프트 ${Object.keys(RECOVERY).length}개`)
-if (minutes < 150 || minutes > 180) fail(`권장 시간 합계가 150~180분 밖: ${minutes}`)
+console.log(`단계 ${STEPS.length}개 · 프롬프트 ${Object.keys(PROMPTS).length}개 · 복구 프롬프트 ${Object.keys(RECOVERY).length}개`)
 if (errors.length) {
   console.error('점검 실패:\n- ' + errors.join('\n- '))
   process.exit(1)

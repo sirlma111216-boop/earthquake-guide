@@ -38,9 +38,6 @@ export default function Footer() {
         공식 자료 확인 기준: {COURSE.docsCheckedOn}. 이후 각 서비스의 메뉴 이름·위치와 무료 이용 조건이 달라질 수 있습니다.
         화면이 안내와 다르면 메뉴의 <strong>목적</strong>을 기준으로 찾고, 위 공식 문서를 확인하세요.
       </p>
-      <p className="muted small">
-        이 페이지는 ‘{COURSE.guideName}’ 안내 페이지입니다. 교사가 만드는 앱 ‘{COURSE.appName}’과는 별개입니다.
-      </p>
     </footer>
   )
 }

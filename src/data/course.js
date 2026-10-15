@@ -6,7 +6,6 @@ export const COURSE = {
   subtitle: '공개 데이터로 만드는 지진·판 경계 탐구 지도',
   appName: '지구는 지금 어디서 흔들릴까?',
   audience: '중학교 과학교사 대상',
-  duration: '약 150~180분',
   noGenApi: '생성형 API 연결 없이 진행',
   result: '결과물: 내가 배포한 지진·판 경계 탐구 지도',
   route: ['Google AI Studio', 'GitHub', 'Netlify'],

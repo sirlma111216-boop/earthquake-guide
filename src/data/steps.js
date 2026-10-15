@@ -1,12 +1,11 @@
 // 0~10단계 안내 콘텐츠.
 // blocks 순서대로 화면에 그려진다.
-//   actions / try : 체크박스가 붙는 번호 목록 (진행률에 포함)
+//   actions / try : 번호가 붙는 따라 하기 목록
 //   prompt        : PROMPTS의 id로 프롬프트를 붙인다
 //   info          : 설명 (paragraphs, list, table)
-//   collapse      : 필요할 때만 펼치는 보조 안내 (진행률에 포함하지 않음)
+//   collapse      : 필요할 때만 펼치는 보조 안내
 //   diagram       : 화면 구조 예시 도식
 // 본문 표기: **굵게**, `코드`, [글자](주소), {{용어}}
-// 체크 항목 id는 '단계id:블록번호:항목번호'로 만들어진다. 항목 순서를 바꾸면 해당 단계의 저장된 체크가 어긋날 수 있다.
 
 const SAME_PROJECT = '**같은 AI Studio 프로젝트의 대화 입력창**에 붙여 넣습니다. 새 앱을 만들지 않습니다.'
 
@@ -28,7 +27,6 @@ export const STEPS = [
     id: 'step-0',
     num: 0,
     title: '준비와 완성 목표 이해하기',
-    minutes: 10,
     outcome: '세 서비스(AI Studio·GitHub·Netlify)에 접근할 수 있고, 오늘 만들 지도 앱의 모습을 압니다.',
     workplace: '이 연수 안내 페이지와 각 서비스의 로그인 화면',
     links: [AI_STUDIO, GITHUB, NETLIFY],
@@ -115,7 +113,6 @@ export const STEPS = [
     id: 'step-1',
     num: 1,
     title: 'AI Studio에서 지도 화면 만들기',
-    minutes: 15,
     outcome: '이동·확대·축소가 되는 세계지도와 앱 제목이 AI Studio 미리보기에 보입니다.',
     workplace: 'Google AI Studio의 Build(앱 만들기) 화면',
     links: [AI_STUDIO, { label: 'AI Studio Build 모드 공식 안내', url: 'https://ai.google.dev/gemini-api/docs/aistudio-build-mode' }],
@@ -201,7 +198,6 @@ export const STEPS = [
     id: 'step-2',
     num: 2,
     title: '실제 지진 데이터 연결하기',
-    minutes: 20,
     outcome: '지도에 USGS의 실제 지진 위치가 원으로 표시되고, 원을 누르면 정보가 나옵니다.',
     workplace: 'API 주소를 여는 새 브라우저 탭 → 같은 AI Studio 프로젝트',
     links: [{ label: 'USGS 최근 7일 GeoJSON', url: FEED.week }, { label: 'USGS GeoJSON 공식 문서', url: 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php' }],
@@ -289,7 +285,6 @@ export const STEPS = [
     id: 'step-3',
     num: 3,
     title: '규모와 깊이를 눈에 보이게 만들기',
-    minutes: 15,
     outcome: '원의 크기로 규모를, 원의 색으로 깊이를 비교할 수 있습니다.',
     workplace: '같은 AI Studio 프로젝트의 대화 입력창과 미리보기',
     links: [AI_STUDIO],
@@ -366,7 +361,6 @@ export const STEPS = [
     id: 'step-4',
     num: 4,
     title: '기간·규모·깊이 필터 만들기',
-    minutes: 15,
     outcome: '기간을 바꿔 자료를 다시 받고, 규모·깊이 조건으로 지진을 골라 볼 수 있습니다.',
     workplace: '같은 AI Studio 프로젝트의 대화 입력창과 미리보기',
     links: [AI_STUDIO],
@@ -434,7 +428,6 @@ export const STEPS = [
     id: 'step-5',
     num: 5,
     title: '판 경계를 겹쳐 보기',
-    minutes: 20,
     outcome: '지진 분포만 보고 예상한 경계와 USGS 판 경계 모델을 비교할 수 있습니다.',
     workplace: '같은 AI Studio 프로젝트의 미리보기 → 대화 입력창 → 미리보기',
     links: [{ label: 'USGS 판 경계 서비스', url: 'https://earthquake.usgs.gov/arcgis/rest/services/eq/map_plateboundaries/MapServer/1' }],
@@ -557,7 +550,6 @@ export const STEPS = [
     id: 'step-6',
     num: 6,
     title: '지진 목록과 요약 정보 만들기',
-    minutes: 15,
     outcome: '조건에 맞는 지진을 목록과 요약 수치로 보고, 목록에서 고른 지진을 지도에서 찾을 수 있습니다.',
     workplace: '같은 AI Studio 프로젝트의 대화 입력창과 미리보기',
     links: [AI_STUDIO],
@@ -609,7 +601,6 @@ export const STEPS = [
     id: 'step-7',
     num: 7,
     title: '수업용 탐구 질문 넣기',
-    minutes: 10,
     outcome: '앱 안에 학생용 탐구 질문 다섯 개와 펼쳐 보는 교사용 해설이 들어갑니다.',
     workplace: '같은 AI Studio 프로젝트의 대화 입력창과 미리보기',
     links: [AI_STUDIO],
@@ -665,7 +656,6 @@ export const STEPS = [
     id: 'step-8',
     num: 8,
     title: '배포 준비와 GitHub 저장',
-    minutes: 15,
     outcome: 'GitHub의 earthquake-map 저장소에 앱 파일과 최근 변경 기록이 있습니다.',
     workplace: '같은 AI Studio 프로젝트 → GitHub',
     links: [AI_STUDIO, GITHUB, { label: 'AI Studio Build 모드 공식 안내', url: 'https://ai.google.dev/gemini-api/docs/aistudio-build-mode' }],
@@ -777,7 +767,6 @@ export const STEPS = [
     id: 'step-9',
     num: 9,
     title: 'Netlify로 배포하기',
-    minutes: 20,
     outcome: 'netlify.app으로 끝나는 내 공개 주소에서 지진 지도가 열립니다.',
     workplace: 'Netlify',
     links: [NETLIFY, { label: 'Netlify 저장소 배포 안내', url: 'https://docs.netlify.com/start/quickstarts/deploy-from-repository/' }, { label: 'Netlify 빌드 설정 안내', url: 'https://docs.netlify.com/build/configure-builds/overview/' }],
@@ -912,7 +901,6 @@ export const STEPS = [
     id: 'step-10',
     num: 10,
     title: '내 수업에 맞게 수정하고 다시 배포하기',
-    minutes: 10,
     outcome: '원본 코드를 고치면 같은 공개 주소의 사이트도 바뀐다는 것을 직접 확인합니다.',
     workplace: '같은 AI Studio 프로젝트 → GitHub → Netlify → 공개 주소',
     links: [AI_STUDIO, GITHUB, NETLIFY],

@@ -4,25 +4,17 @@ import PromptBlock from './PromptBlock.jsx'
 import Collapsible from './Collapsible.jsx'
 import Diagram from './Diagram.jsx'
 import DeployUrl from './DeployUrl.jsx'
-import { useGuide } from '../GuideContext.js'
 import { PROMPTS, RECOVERY, NETLIFY_ERROR_TEMPLATE } from '../data/prompts.js'
 import * as COURSE_DATA from '../data/course.js'
 import { STEPS } from '../data/steps.js'
-import { blockItemId, checklistId, STEP_CHECK_IDS, countDone } from '../lib/checks.js'
 
-function CheckItem({ id, text, num }) {
-  const { checks, toggle } = useGuide()
-  const checked = !!checks[id]
-  const inputId = 'chk-' + id.replace(/[^a-zA-Z0-9-]/g, '_')
+function StepItem({ text, num }) {
   return (
-    <li className={'check-item' + (checked ? ' is-done' : '')}>
-      <input id={inputId} type="checkbox" checked={checked} onChange={() => toggle(id)} />
-      <label htmlFor={inputId}>
-        {num != null && <span className="check-num" aria-hidden="true">{num}</span>}
-        <span className="check-text">
-          <RichText text={text} />
-        </span>
-      </label>
+    <li className="check-item">
+      <span className={'check-num' + (num == null ? ' is-mark' : '')} aria-hidden="true">{num ?? '✓'}</span>
+      <span className="check-text">
+        <RichText text={text} />
+      </span>
     </li>
   )
 }
@@ -77,7 +69,7 @@ function Block({ step, b, bi }) {
             {title}
           </h3>
           <ol className="check-list">
-            {b.items.map((t, i) => <CheckItem key={i} id={blockItemId(step, bi, i)} text={t} num={i + 1} />)}
+            {b.items.map((t, i) => <StepItem key={i} text={t} num={i + 1} />)}
           </ol>
         </section>
       )
@@ -109,7 +101,7 @@ function Block({ step, b, bi }) {
     case 'collapse':
       return (
         <Collapsible title={b.title} className="optional">
-          <p className="optional-note">필요한 경우에만 보는 보조 안내입니다. 진행률에는 포함되지 않습니다.</p>
+          <p className="optional-note">필요한 경우에만 보는 보조 안내입니다.</p>
           {b.blocks.map((inner, i) => <Info key={i} b={inner} />)}
         </Collapsible>
       )
@@ -158,22 +150,15 @@ function Trouble({ step }) {
 }
 
 const StepView = forwardRef(function StepView({ step, active, onGo }, headingRef) {
-  const { checks } = useGuide()
   const idx = STEPS.indexOf(step)
   const prev = STEPS[idx - 1]
   const next = STEPS[idx + 1]
-  const ids = STEP_CHECK_IDS[step.id]
-  const done = countDone(ids, checks)
 
   return (
     <article id={step.id} className={'step' + (active ? ' is-active' : '')} aria-labelledby={`${step.id}-title`}>
       <header className="step-head">
         <div className="step-meta">
           <span className="step-num">{step.num}단계</span>
-          <span className="step-time" title="권장 시간 — 생성·수정·로그인 상황에 따라 달라질 수 있습니다">권장 약 {step.minutes}분</span>
-          <span className="step-count" aria-label={`이 단계 체크 ${ids.length}개 중 ${done}개 완료`}>
-            체크 {done}/{ids.length}
-          </span>
         </div>
         <h2 id={`${step.id}-title`} tabIndex={-1} ref={active ? headingRef : undefined}>
           {step.title}
@@ -207,10 +192,10 @@ const StepView = forwardRef(function StepView({ step, active, onGo }, headingRef
       </section>
 
       <section className="checklist">
-        <h3>완료 체크리스트</h3>
-        <p className="muted">외부 서비스의 작업은 이 페이지가 자동으로 확인하지 않습니다. 직접 확인한 항목만 체크하세요.</p>
+        <h3>완료 확인</h3>
+        <p className="muted">외부 서비스의 작업은 이 페이지가 자동으로 확인하지 않습니다. 아래 내용을 직접 확인하세요.</p>
         <ul className="check-list">
-          {step.checklist.map((t, i) => <CheckItem key={i} id={checklistId(step, i)} text={t} />)}
+          {step.checklist.map((t, i) => <StepItem key={i} text={t} />)}
         </ul>
       </section>
 
@@ -227,7 +212,7 @@ const StepView = forwardRef(function StepView({ step, active, onGo }, headingRef
             다음: {next.num}단계 {next.title} →
           </button>
         ) : (
-          <span className="done-note">마지막 단계입니다. 완료 체크리스트를 확인하세요.</span>
+          <span className="done-note">마지막 단계입니다. 완료 확인 목록을 살펴보세요.</span>
         )}
       </nav>
     </article>
